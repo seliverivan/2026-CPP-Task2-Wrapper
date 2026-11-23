@@ -1,6 +1,8 @@
-
 #include <iostream>
 #include <stdexcept>
+#include <cstdio>
+#include <string>
+
 #include "Wrapper.h"
 #include "Engine.h"
 #include "TextDocument.h"

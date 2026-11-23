@@ -1,6 +1,10 @@
 #pragma once
 
+#include <algorithm>
 #include <functional>
+#include <stdexcept>
+#include <utility>
+
 #include "Convert.h"
 #include "ArgsMap.h"
 
@@ -14,8 +18,10 @@ private:
     ArgsMap merge(const ArgsMap& newArgs) const {
         ArgsMap mergedArgs = defaultArgs;
 
-        for (const auto& [key, value] : newArgs) {
-            auto it = std::find_if(mergedArgs.begin(),mergedArgs.end(),
+        for (const auto& argument : newArgs) {
+            const auto& key = argument.first;
+
+            auto it = std::find_if(mergedArgs.begin(), mergedArgs.end(),
                 [&key](const auto& arg) {
                     return arg.first == key;
                 }
@@ -25,7 +31,7 @@ private:
                 throw std::invalid_argument("Unknown argument: " + key);
             }
 
-            it->second = value;
+            it->second = argument.second;
         }
 
         return mergedArgs;
